@@ -1,9 +1,11 @@
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class DequeTest {
 
@@ -146,5 +148,43 @@ public class DequeTest {
         deque.removeLast();
     }
 
+    @Test(expected = UnsupportedOperationException.class)
+    public void iteratorRemoveThrowsUnsupportedOperationException() {
+        new Deque<>().iterator().remove();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void iteratorNextOnEmpty() {
+        new Deque<>().iterator().next();
+    }
+
+    @Test
+    public void iteratorStartsAlwaysFromFirst() {
+        Deque deque = new Deque<>();
+        deque.addLast("one");
+        deque.addLast("two");
+        deque.addLast("three");
+
+        assertEquals("one", deque.iterator().next());
+        assertEquals("one", deque.iterator().next());
+    }
+
+    @Test
+    public void iteratorIterates() {
+        Deque deque = new Deque<>();
+        deque.addLast("one");
+        deque.addLast("two");
+        deque.addLast("three");
+
+        Iterator iterator = deque.iterator();
+
+        assertTrue(iterator.hasNext());
+        assertEquals("one", iterator.next());
+        assertTrue(iterator.hasNext());
+        assertEquals("two", iterator.next());
+        assertTrue(iterator.hasNext());
+        assertEquals("three", iterator.next());
+        assertFalse(iterator.hasNext());
+    }
 
 }
