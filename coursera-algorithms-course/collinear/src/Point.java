@@ -63,12 +63,16 @@ public class Point implements Comparable<Point> {
         double changeY = that.y - this.y;
         double changeX = that.x - this.x;
 
+        if ((changeX == 0) && (changeY == 0)) {
+            return Double.NEGATIVE_INFINITY;
+        }
+
         if (changeX == 0) {
             return Double.POSITIVE_INFINITY;
         }
 
-        if ((changeX == 0) && (changeY == 0)) {
-            return Double.NEGATIVE_INFINITY;
+        if (changeY == 0) {
+            return 0;
         }
 
         return changeY / changeX;
